@@ -27,7 +27,11 @@ RUN rm -f Python-3.8.10.tgz
 RUN rm -rf Python-3.8.10/
 
 ARG USER
-RUN useradd -m -s /bin/bash ${USER}
+ARG GROUP
+ARG UID
+ARG GID
+RUN groupadd -g ${GID} ${GROUP} && \
+    useradd -m -s /bin/bash -u ${UID} -g ${GID} ${USER}
 USER ${USER}
 
 ENV LC_ALL=C.UTF-8

@@ -27,7 +27,9 @@ This study was presented at AISTATS 2024 (acceptance rate: 27.6%). [[arXiv](http
 2. Build a Docker image using `Dockerfile` and `requrements.txt`.
 
     ```bash
-    docker build --build-arg USER=${USER} -t simplex-ts SimplexTS
+    docker build --build-arg USER=${USER} --build-arg GROUP=$(id -gn) \
+            --build-arg UID=$(id -u) --build-arg GID=$(id -g) \
+            --tag simplex-ts SimplexTS
     ```
 
 3. Launch a container.
@@ -35,8 +37,7 @@ This study was presented at AISTATS 2024 (acceptance rate: 27.6%). [[arXiv](http
     ```bash
     docker run -it --rm --gpus all \
             --mount type=bind,source=$(pwd)/SimplexTS,target=${HOME}/SimplexTS \
-            --workdir ${HOME}/SimplexTS \
-            simplex-ts
+            --workdir ${HOME}/SimplexTS simplex-ts
     ```
 
 We conducted our experiments on a NVIDIA A100 GPU.
